@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mile Tracker</title>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css"/>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css"/>
+    <link rel="stylesheet" href="css/style.css">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+
+
+    <script src="js/script.js"></script>
+
+    </script>
+  </head>
+
+  <body>
+      <div data-role="page" id="home">
+          <header data-role="header" data-theme="b">
+            <h1> Mile Tracker </h1>
+          </header>
+
+          <div data-role="navbar">
+          <ul>
+            <li> <a href="#home" data-transition="none" data-icon="home">Home</a></li>
+            <li> <a href="#add" data-transition="none" data-icon="plus">Add Run</a></li>
+          </ul>
+          </div>
+
+          <div dat-role="content">
+            <h3>Welcome to my Badass Mile Tracker app!</h3>
+            <p>With this app you can track your running, jogging or walking miles.</p>
+
+            <h3>Your latest Runs</h3>
+
+            <ul id="stats" data-role="listview" data-filter="true" data-filter-placeholder"Filter runs by data or distance" data-inset="true"></ul>
+            <br>
+            <button id="clearRuns" onclick="return confirm('Are you Sure?')" data-theme="b">Clear total mileage</button>
+          </div>
+
+        <footer data-role="footer" data-theme="b">
+          <h4>Mile Tracker &copy; 2015</h4>
+        </footer>
+</div>
+
+  </body>
+
+
+</html>
