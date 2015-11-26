@@ -70,22 +70,38 @@ $(document).one('pageinit', function(){
   * Edit a run
   */
   function editRun(){
-    // Get form values
-    var miles = $('#addMiles').val();
-    var date = $('#addDate').val();
+    // Get current data
+    currentMiles = localStorage.getItem('currentMiles');
+    currentDate = localStorage.getItem('currentDate');
 
-    // Create 'run' object
-    var run = {
+    var runs = getRunObjects();
+
+    // Looop through runs
+    for(var i = 0;i<runs.length; i++){
+      if(runs[i].miles = currentMiles && runs[i].date == currentDate){
+        runs.splice(i,1);
+      }
+      localStorage.setItem('runs', JSON.stringify(runs));
+
+    }
+
+
+    // Get form values
+    var miles = $('#editMiles').val();
+    var date = $('#editDate').val();
+
+    // Create 'update_run' object
+    var update_run = {
       date:date,
       miles: parseFloat(miles)
     };
 
-    var runs = getRunObjects();
+
 
     // Add run to runs array
-    runs.push(run);
+    runs.push(update_run);
 
-    alert('Run Added');
+    alert('Run Updated');
 
     // Set stringified object to localStorage
     localStorage.setItem('runs', JSON.stringify(runs));
