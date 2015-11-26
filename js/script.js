@@ -15,6 +15,12 @@ $(document).one('pageinit', function(){
   // Set Current Handler
   $('#stats').on('tap', '#editLink', setCurrent);
 
+  // Clear Handler
+  $('#clearRuns').on('tap', clearRuns);
+
+
+
+
   /*
   * Show all runs on homepage
   */
@@ -32,11 +38,12 @@ $(document).one('pageinit', function(){
         $('#home').bind('pageinit', function() {
           $('#stats').listview('refresh');
         })
+      } else {
+            $('#stats').html('<p>You have no logged runs</p>')
+
       }
 
   }
-
-
 
   /*
   * Add a run
@@ -117,9 +124,16 @@ $(document).one('pageinit', function(){
   }
 
   /*
+  * Clear Runs
+  */
+  function clearRuns(){
+    localStorage.removeItem('runs');
+    $('#stats').html('<p>You have no logged runs</p>')
+  }
+
+  /*
   * Delete Run
   */
-
   function deleteRun(){
 
     // Set local storage items
