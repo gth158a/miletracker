@@ -6,6 +6,12 @@ $(document).one('pageinit', function(){
   // Add Handler
   $('#submitAdd').on('tap', addRun);
 
+  // Edit Handler
+  $('#submitEdit').on('tap', editRun);
+
+  // Set Current Handler
+  $('#stats').on('tap', '#editLink', setCurrent);
+
   /*
   * Show all runs on homepage
   */
@@ -16,9 +22,10 @@ $(document).one('pageinit', function(){
       // Check if empty
       if(runs != '' && runs != null){
         for (var i =0; i <runs.length; i++){
-          $('#stats').append('<li class="ui-body-inherit ui-li-static"><strong>Date: </strong>'+runs[i]["date"]+ ' <br><strong>Distance: </strong>'+runs[i]["miles"]+'m<div class="controls">' + '<a href="#edit">Edit</a> | <a href="#">Delete</a></li>');
+          $('#stats').append('<li class="ui-body-inherit ui-li-static"><strong>Date: </strong>'+runs[i]["date"]+ ' <br><strong>Distance: </strong>'+runs[i]["miles"]+'m<div class="controls">' + '<a href="#edit" id="editLink" data-miles="'+runs[i]["miles"]+'" data-date="'+runs[i]["date"]+'">Edit</a> | <a href="#">Delete</a></li>');
 
         }
+
         $('#home').bind('pageinit', function() {
           $('#stats').listview('refresh');
         })
@@ -60,6 +67,36 @@ $(document).one('pageinit', function(){
   }
 
   /*
+  * Edit a run
+  */
+  function editRun(){
+    // Get form values
+    var miles = $('#addMiles').val();
+    var date = $('#addDate').val();
+
+    // Create 'run' object
+    var run = {
+      date:date,
+      miles: parseFloat(miles)
+    };
+
+    var runs = getRunObjects();
+
+    // Add run to runs array
+    runs.push(run);
+
+    alert('Run Added');
+
+    // Set stringified object to localStorage
+    localStorage.setItem('runs', JSON.stringify(runs));
+
+    // Redirect
+    window.location.href="index.html"
+
+    return false; //to make sure the form actual does not submit
+
+  }
+  /*
   * Get the runs object
   */
   function getRunObjects(){
@@ -78,4 +115,16 @@ $(document).one('pageinit', function(){
     return runs.sort(function(a,b){return new Date(b.date) - new Date(a.date)});
   }
 
+  /*
+  * Set the current miles and date
+  */
+  function setCurrent(){
+    // Set local storage items
+    localStorage.setItem('currentMiles', $(this).data('miles'));
+    localStorage.setItem('currentDate', $(this).data('date'));
+
+    // Insert form fields
+    $('#editMiles').val(localStorage.getItem('currentMiles'));
+    $('#editDate').val(localStorage.getItem('currentDate'));
+}
 })
