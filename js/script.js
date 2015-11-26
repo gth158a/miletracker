@@ -9,6 +9,9 @@ $(document).one('pageinit', function(){
   // Edit Handler
   $('#submitEdit').on('tap', editRun);
 
+  // Delete Handler
+  $('#stats').on('tap', '#deleteLink', deleteRun);
+
   // Set Current Handler
   $('#stats').on('tap', '#editLink', setCurrent);
 
@@ -22,7 +25,7 @@ $(document).one('pageinit', function(){
       // Check if empty
       if(runs != '' && runs != null){
         for (var i =0; i <runs.length; i++){
-          $('#stats').append('<li class="ui-body-inherit ui-li-static"><strong>Date: </strong>'+runs[i]["date"]+ ' <br><strong>Distance: </strong>'+runs[i]["miles"]+'m<div class="controls">' + '<a href="#edit" id="editLink" data-miles="'+runs[i]["miles"]+'" data-date="'+runs[i]["date"]+'">Edit</a> | <a href="#">Delete</a></li>');
+          $('#stats').append('<li class="ui-body-inherit ui-li-static"><strong>Date: </strong>'+runs[i]["date"]+ ' <br><strong>Distance: </strong>'+runs[i]["miles"]+'m<div class="controls">' + '<a href="#edit" id="editLink" data-miles="'+runs[i]["miles"]+'" data-date="'+runs[i]["date"]+'">Edit</a> | <a href="#" id="deleteLink" data-miles="'+runs[i]["miles"]+'" data-date="'+runs[i]["date"]+'" onclick="return confirm(\'Are you sure?\')">Delete</a></li>');
 
         }
 
@@ -112,6 +115,46 @@ $(document).one('pageinit', function(){
     return false; //to make sure the form actual does not submit
 
   }
+
+  /*
+  * Delete Run
+  */
+
+  function deleteRun(){
+
+    // Set local storage items
+    localStorage.setItem('currentMiles', $(this).data('miles'));
+    localStorage.setItem('currentDate', $(this).data('date'));
+
+    // Get current data
+    currentMiles = localStorage.getItem('currentMiles');
+    currentDate = localStorage.getItem('currentDate');
+
+    var runs = getRunObjects();
+
+    // Looop through runs
+    for(var i = 0;i<runs.length; i++){
+      if(runs[i].miles = currentMiles && runs[i].date == currentDate){
+        runs.splice(i,1);
+      }
+      localStorage.setItem('runs', JSON.stringify(runs));
+
+    }
+
+    alert('Run Deleted');
+
+    // Set stringified object to localStorage
+    localStorage.setItem('runs', JSON.stringify(runs));
+
+    // Redirect
+    window.location.href="index.html"
+
+    return false; //to make sure the form actual does not submit
+
+  }
+
+
+
   /*
   * Get the runs object
   */
